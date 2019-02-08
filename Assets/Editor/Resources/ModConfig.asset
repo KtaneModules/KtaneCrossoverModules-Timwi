@@ -11,12 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
   m_Name: ModConfig
   m_EditorClassIdentifier: 
-  id: crossoverModules
+  id: CrossoverModules
   title: Crossover Modules
-  description: "Combining multiple modules is so fun!\n\nCurrent Modules:\n - Complicated
-    Buttons\n - Symbolic Password\n - Button Sequences\n\nDesigned and implemented
-    by ZekNikZ.\n\nModule IDs: complicatedButtonsModule, symbolicPasswordModule, buttonSequencesModule\n\nFind
-    both HTML and PDF manuals at https://ktane.timwi.de/"
+  description: "[b]This is a re-upload with additions and fixes. Please unsubscribe
+    from [url=https://steamcommunity.com/sharedfiles/filedetails/?id=831134377]the
+    old version[/url].[/b]\n\nCombining multiple modules is so fun!\n\nModules:\n
+    \u2022 Complicated Buttons \u2014 [url=https://ktane.timwi.de/HTML/Complicated%20Buttons.html]HTML[/url],
+    [url=https://ktane.timwi.de/PDF/Complicated%20Buttons.pdf]PDF[/url]\n \u2022 Symbolic
+    Password \u2014 [url=https://ktane.timwi.de/HTML/Symbolic%20Password.html]HTML[/url],
+    [url=https://ktane.timwi.de/PDF/Symbolic%20Password.pdf]PDF[/url]\n \u2022 Button
+    Sequence \u2014 [url=https://ktane.timwi.de/HTML/Button%20Sequence.html]HTML[/url],
+    [url=https://ktane.timwi.de/PDF/Button%20Sequence.pdf]PDF[/url]\n\nDesigned and
+    implemented by ZekNikZ. Maintained by Timwi.\n\nModule IDs: complicatedButtonsModule,
+    symbolicPasswordModule, buttonSequencesModule"
   version: 5.2
   outputFolder: build
-  previewImage: {fileID: 2800000, guid: 21e16d0454a27cc4c930e704700adcba, type: 3}
+  previewImage: {fileID: 2800000, guid: c3cb9df5af21b224c9ae6eab6e3d30d1, type: 3}

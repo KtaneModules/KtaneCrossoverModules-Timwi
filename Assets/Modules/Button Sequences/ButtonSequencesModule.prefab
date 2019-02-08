@@ -2799,7 +2799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ModuleType: buttonSequencesModule
-  ModuleDisplayName: Button Sequences
+  ModuleDisplayName: Button Sequence
   RequiresTimerVisibility: 1
 --- !u!114 &114000011440427254
 MonoBehaviour:

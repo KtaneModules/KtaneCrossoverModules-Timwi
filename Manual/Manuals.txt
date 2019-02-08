@@ -1,0 +1,1 @@
+The HTML manuals are in the KtaneContent repository: https://github.com/Timwi/KtaneContent/
