@@ -1,45 +1,29 @@
 fileFormatVersion: 2
-guid: c7dfb3ce01b9a3347a6c1bb00a35e0a5
-timeCreated: 1501525829
+guid: 96009812c3595bb4f96ed0b5b01c9605
+timeCreated: 1549665962
 licenseType: Free
-SketchUpImporter:
-  generateBackFace: 0
-  mergeCoplanarFaces: 0
-  selectedNodes: 0000000001000000
-  assetHash:
-    serializedVersion: 2
-    Hash: dc331869e16fb410c731e35984e570e9
-  longitude: -105.242139
-  latitude: 40.018309
-  northCorrection: -0
-  fileUnit: 0
-  sketchUpImportData:
-    defaultCamera:
-      position: {x: -0.0036218555, y: 0.21329217, z: -0.049406912}
-      lookAt: {x: 0.26623672, y: -13.265373, z: 3.361959}
-      up: {x: 0.07643447, y: 0.2460775, z: 0.9662317}
-      fov: 35
-      aspectRatio: 0
-      orthoSize: 1
-      isPerspective: 1
-    scenes: []
-  serializedVersion: 19
+ModelImporter:
+  serializedVersion: 21
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Mesh cb_short
+    100000: ShortButton
+    100002: //RootNode
+    400000: ShortButton
+    400002: //RootNode
+    2300000: ShortButton
+    3300000: ShortButton
+    4300000: ShortButton
   materials:
     importMaterials: 1
-    materialName: 2
-    materialSearch: 0
+    materialName: 0
+    materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -50,14 +34,18 @@ SketchUpImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.0254
+    globalScale: 0.001
     meshCompression: 0
     addColliders: 0
+    importVisibility: 1
     importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -73,9 +61,11 @@ SketchUpImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 0
+    normalCalculationMode: 4
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -86,7 +76,10 @@ SketchUpImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 0
   humanoidOversampling: 1
