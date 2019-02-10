@@ -1033,7 +1033,7 @@ Transform:
   m_GameObject: {fileID: 1686074937157396}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 13, z: 0}
-  m_LocalScale: {x: 1.2, y: 0.5, z: 1.2}
+  m_LocalScale: {x: 120, y: 50, z: 120}
   m_Children: []
   m_Father: {fileID: 4490558934623282}
   m_RootOrder: 2
@@ -1224,7 +1224,7 @@ Transform:
   m_GameObject: {fileID: 1704385204398082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 13, z: 0}
-  m_LocalScale: {x: 1.2, y: 0.5, z: 1.2}
+  m_LocalScale: {x: 120, y: 50, z: 120}
   m_Children: []
   m_Father: {fileID: 4231094610919826}
   m_RootOrder: 2
@@ -1346,7 +1346,7 @@ Transform:
   m_GameObject: {fileID: 1215405834329418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 13, z: 0}
-  m_LocalScale: {x: 1.2, y: 0.5, z: 1.2}
+  m_LocalScale: {x: 120, y: 50, z: 120}
   m_Children: []
   m_Father: {fileID: 4573684307256136}
   m_RootOrder: 2
@@ -2786,7 +2786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - Standard
+  - KT/Mobile/DiffuseTint
 --- !u!114 &114000011374495432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2813,7 +2813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - Standard
+  - KT/Mobile/DiffuseTint
 --- !u!114 &114000012094604654
 MonoBehaviour:
   m_ObjectHideFlags: 1
