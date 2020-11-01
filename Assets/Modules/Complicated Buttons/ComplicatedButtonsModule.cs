@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CrossoverModules;
@@ -186,5 +187,14 @@ public class ComplicatedButtonsModule : MonoBehaviour
             }
         }
         return list.ToArray();
+    }
+
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        while (currentButton < order.Length)
+        {
+            Buttons[order[currentButton] - 1].OnInteract();
+            yield return new WaitForSeconds(.25f);
+        }
     }
 }
