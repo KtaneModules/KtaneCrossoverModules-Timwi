@@ -161,45 +161,44 @@ public class ButtonSequencesModule : MonoBehaviour {
     private void Update() {
         //if (holdTimer >= 0) holdTimer++;
         if (holdBombTime == -1 && holdTimer > 0 && Time.time - holdTimer > 0.5f) {
-            if (Solution[currentPanel, heldButton] == 1) {
-                Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} is being held, even though it shouldn't be.", moduleId, currentPanel + 1, heldButton + 1);
-            } else {
-                string colorName;
-                int color = Random.Range(0, 5);
-                switch (color) {
-                    case 0:
-                        lightState[currentPanel, heldButton] = 3;
-                        holdBombTime = 2;
-                        colorName = "BLUE";
-                        break;
-                    case 1:
-                        lightState[currentPanel, heldButton] = 5;
-                        holdBombTime = 7;
-                        colorName = "WHITE";
-                        break;
-                    case 2:
-                        lightState[currentPanel, heldButton] = 4;
-                        holdBombTime = 3;
-                        colorName = "YELLOW";
-                        break;
-                    case 3:
-                        lightState[currentPanel, heldButton] = 6;
-                        holdBombTime = 4;
-                        colorName = "MAGENTA";
-                        break;
-                    case 4:
-                        lightState[currentPanel, heldButton] = 8;
-                        holdBombTime = 0;
-                        colorName = "CYAN";
-                        break;
-                    default:
-                        holdBombTime = -1;
-                        colorName = "ERROR";
-                        break;
-                }
-                Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} is being held. LED Color: {3}. Release when timer contains a \"{4}\".", moduleId, currentPanel + 1, heldButton + 1, colorName, holdBombTime);
-                UpdateLights();
+            string colorName;
+            int color = Random.Range(0, 5);
+            switch (color) {
+                case 0:
+                    lightState[currentPanel, heldButton] = 3;
+                    holdBombTime = 2;
+                    colorName = "BLUE";
+                    break;
+                case 1:
+                    lightState[currentPanel, heldButton] = 5;
+                    holdBombTime = 7;
+                    colorName = "WHITE";
+                    break;
+                case 2:
+                    lightState[currentPanel, heldButton] = 4;
+                    holdBombTime = 3;
+                    colorName = "YELLOW";
+                    break;
+                case 3:
+                    lightState[currentPanel, heldButton] = 6;
+                    holdBombTime = 4;
+                    colorName = "MAGENTA";
+                    break;
+                case 4:
+                    lightState[currentPanel, heldButton] = 8;
+                    holdBombTime = 0;
+                    colorName = "CYAN";
+                    break;
+                default:
+                    holdBombTime = -1;
+                    colorName = "ERROR";
+                    break;
             }
+            if (Solution[currentPanel, heldButton] == 2)
+                Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} is being held. LED Color: {3}. Release when timer contains a \"{4}\".", moduleId, currentPanel + 1, heldButton + 1, colorName, holdBombTime);
+            else
+                Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} is being held. LED Color: {3}. However, holding was incorrect, so release will issue a strike.", moduleId, currentPanel + 1, heldButton + 1, colorName);
+            UpdateLights();
         }
         if (needsUpdate && DoorAnimator.GetCurrentAnimatorStateInfo(0).IsName("DoorOpen")) {
             UpdateButtons();
