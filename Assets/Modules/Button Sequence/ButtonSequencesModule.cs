@@ -291,7 +291,10 @@ public class ButtonSequencesModule : MonoBehaviour
                 Debug.LogFormat("[Button Sequences #{0}] Panel {1} completed successfully.", moduleId, currentPanel + 1);
                 Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.WireSequenceMechanism, this.transform);
                 foreach (var anim in ButtonAnimators)
+                {
+                    anim.StopPlayback();
                     anim.Play("HideButtonAnimation");
+                }
 
                 DoorAnimator.Play("DoorClose");
                 needsUpdate = true;
