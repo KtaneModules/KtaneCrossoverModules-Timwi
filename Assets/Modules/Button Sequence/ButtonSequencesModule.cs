@@ -86,6 +86,7 @@ public class ButtonSequencesModule : MonoBehaviour
     private int[,] currentState;
     private int[,] lightState;
     private bool buttonsActive = true;
+    private bool animating = true;
     private float holdTimer = -1;
     private int heldButton = -1;
     private int holdBombTime = -1;
@@ -202,6 +203,7 @@ public class ButtonSequencesModule : MonoBehaviour
         {
             anim.Play("Begin");
         }
+        StartCoroutine(WaitForAnimation());
         Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.WireSequenceMechanism, this.transform);
     }
 
@@ -295,6 +297,8 @@ public class ButtonSequencesModule : MonoBehaviour
                     anim.StopPlayback();
                     anim.Play("HideButtonAnimation");
                 }
+                animating = true;
+                StartCoroutine(WaitForAnimation());
 
                 DoorAnimator.Play("DoorClose");
                 needsUpdate = true;
@@ -339,70 +343,76 @@ public class ButtonSequencesModule : MonoBehaviour
 
     private void ButtonRelease(int button)
     {
-        ButtonAnimators[button].Play("ButtonUpAnimation");
-        Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonRelease, this.transform);
-        if (currentState[currentPanel, button] == Solution[currentPanel, button])
+        if (buttonsActive)
         {
-            BombModule.HandleStrike();
-            lightState[currentPanel, button] = 1;
-            if (Solution[currentPanel, button] == 0)
-                Debug.LogFormat("[Button Sequences #{0}] Strike: Panel {1} Button {2} pressed/held when not needed.", moduleId, currentPanel + 1, button + 1);
-            else
-                Debug.LogFormat("[Button Sequences #{0}] Strike: Panel {1} Button {2} pressed when already dealt with.", moduleId, currentPanel + 1, button + 1);
-        }
-        else
-        {
-            if (Time.time - holdTimer > 0.5f)
+            ButtonAnimators[button].Play("ButtonUpAnimation");
+            Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonRelease, this.transform);
+            if (currentState[currentPanel, button] == Solution[currentPanel, button])
             {
-                string time = BombInfo.GetFormattedTime();
-                if (time.Length == 4)
+                BombModule.HandleStrike();
+                lightState[currentPanel, button] = 1;
+                if (Solution[currentPanel, button] == 0)
+                    Debug.LogFormat("[Button Sequences #{0}] Strike: Panel {1} Button {2} pressed/held when not needed.", moduleId, currentPanel + 1, button + 1);
+                else
+                    Debug.LogFormat("[Button Sequences #{0}] Strike: Panel {1} Button {2} pressed when already dealt with.", moduleId, currentPanel + 1, button + 1);
+            }
+            else
+            {
+                if (Time.time - holdTimer > 0.5f)
                 {
-                    time = '0' + time;
+                    string time = BombInfo.GetFormattedTime();
+                    if (time.Length == 4)
+                    {
+                        time = '0' + time;
+                    }
+                    if (Solution[currentPanel, button] == 1)
+                    {
+                        BombModule.HandleStrike();
+                        lightState[currentPanel, button] = 1;
+                        Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} held when it shouldn't have been.", moduleId, currentPanel + 1, button + 1);
+                    }
+                    else if (time.Contains(holdBombTime.ToString()))
+                    {
+                        currentState[currentPanel, button] = 2;
+                        lightState[currentPanel, button] = 2;
+                        Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} held successfully.", moduleId, currentPanel + 1, button + 1);
+                    }
+                    else
+                    {
+                        BombModule.HandleStrike();
+                        lightState[currentPanel, button] = 1;
+                        Debug.LogFormat("[Button Sequences #{0}] Strike: Panel {1} Button {2} released at improper time. Current Time: {3}", moduleId, currentPanel + 1, button + 1, time);
+                    }
                 }
-                if (Solution[currentPanel, button] == 1)
+                else if (Solution[currentPanel, button] == 1)
                 {
-                    BombModule.HandleStrike();
-                    lightState[currentPanel, button] = 1;
-                    Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} held when it shouldn't have been.", moduleId, currentPanel + 1, button + 1);
-                }
-                else if (time.Contains(holdBombTime.ToString()))
-                {
-                    currentState[currentPanel, button] = 2;
+                    currentState[currentPanel, button] = 1;
                     lightState[currentPanel, button] = 2;
-                    Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} held successfully.", moduleId, currentPanel + 1, button + 1);
+                    Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} pressed successfully.", moduleId, currentPanel + 1, button + 1);
                 }
                 else
                 {
                     BombModule.HandleStrike();
                     lightState[currentPanel, button] = 1;
-                    Debug.LogFormat("[Button Sequences #{0}] Strike: Panel {1} Button {2} released at improper time. Current Time: {3}", moduleId, currentPanel + 1, button + 1, time);
+                    Debug.LogFormat("[Button Sequences #{0}] Strike: Panel {1} Button {2} pressed when it should have been held.", moduleId, currentPanel + 1, button + 1);
                 }
             }
-            else if (Solution[currentPanel, button] == 1)
-            {
-                currentState[currentPanel, button] = 1;
-                lightState[currentPanel, button] = 2;
-                Debug.LogFormat("[Button Sequences #{0}] Panel {1} Button {2} pressed successfully.", moduleId, currentPanel + 1, button + 1);
-            }
-            else
-            {
-                BombModule.HandleStrike();
-                lightState[currentPanel, button] = 1;
-                Debug.LogFormat("[Button Sequences #{0}] Strike: Panel {1} Button {2} pressed when it should have been held.", moduleId, currentPanel + 1, button + 1);
-            }
+            UpdateLights();
+            heldButton = -1;
+            holdTimer = -1;
+            holdBombTime = -1;
         }
-        UpdateLights();
-        heldButton = -1;
-        holdTimer = -1;
-        holdBombTime = -1;
     }
 
     private void HandlePress(int button)
     {
-        Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonPress, this.transform);
-        ButtonAnimators[button].Play("ButtonDownAnimation");
-        heldButton = button;
-        holdTimer = Time.time;
+        if (buttonsActive)
+        {
+            Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonPress, this.transform);
+            ButtonAnimators[button].Play("ButtonDownAnimation");
+            heldButton = button;
+            holdTimer = Time.time;
+        }
     }
 
     // Light Methods
@@ -415,6 +425,13 @@ public class ButtonSequencesModule : MonoBehaviour
             else
                 Lights[i].sharedMaterial = LightColors[lightState[currentPanel, i]];
         }
+    }
+
+    // Animation Wait Methods
+    private IEnumerator WaitForAnimation()
+    {
+        yield return new WaitForSeconds(1f);
+        animating = false;
     }
 
     private int _heldIndex = -1;
@@ -551,6 +568,42 @@ public class ButtonSequencesModule : MonoBehaviour
                 break;
             default:
                 yield break;
+        }
+    }
+
+    private IEnumerator TwitchHandleForcedSolve()
+    {
+        while (buttonsActive)
+        {
+            while (animating) yield return true;
+            for (int i = 0; i < 3; i++)
+            {
+                if (currentState[currentPanel, i] != Solution[currentPanel, i] && Solution[currentPanel, i] == 1)
+                {
+                    Buttons[i].OnInteract();
+                    Buttons[i].OnInteractEnded();
+                    yield return new WaitForSeconds(0.1f);
+                }
+                else if (currentState[currentPanel, i] != Solution[currentPanel, i] && Solution[currentPanel, i] == 2)
+                {
+                    Buttons[i].OnInteract();
+                    string time = BombInfo.GetFormattedTime();
+                    if (time.Length == 4)
+                        time = '0' + time;
+                    while (!time.Contains(holdBombTime.ToString()))
+                    {
+                        yield return true;
+                        time = BombInfo.GetFormattedTime();
+                        if (time.Length == 4)
+                            time = '0' + time;
+                    }
+                    Buttons[i].OnInteractEnded();
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+            NextPanelButton.OnInteract();
+            NextPanelButton.OnInteractEnded();
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }
