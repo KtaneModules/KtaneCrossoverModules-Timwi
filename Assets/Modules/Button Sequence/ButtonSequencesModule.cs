@@ -573,6 +573,14 @@ public class ButtonSequencesModule : MonoBehaviour
 
     private IEnumerator TwitchHandleForcedSolve()
     {
+        if (heldButton != -1)
+        {
+            if (Solution[currentPanel, heldButton] != 2)
+            {
+                BombModule.HandlePass();
+                yield break;
+            }
+        }
         while (buttonsActive)
         {
             while (animating) yield return true;
