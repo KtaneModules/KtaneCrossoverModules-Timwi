@@ -32,6 +32,7 @@ public class ComplicatedButtonsModule : MonoBehaviour
     int currentButton = 0;
     int[] actions;
     int moduleId;
+    bool moduleSolved;
 
     static int moduleIdCounter = 1;
 
@@ -63,13 +64,15 @@ public class ComplicatedButtonsModule : MonoBehaviour
 
     void HandlePress(int button, KMSelectable buttonSelectable)
     {
-        if (order == null)
-            // Module not yet activated.
-            return;
-
-        Audio.PlaySoundAtTransform("tick", buttonSelectable.transform);
         buttonSelectable.AddInteractionPunch();
 
+        if (order == null /* Module not yet activated */ || moduleSolved)
+        {
+            Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, buttonSelectable.transform);
+            return;
+        }
+
+        Audio.PlaySoundAtTransform("tick", buttonSelectable.transform);
         if (order[currentButton] != button)
         {
             Debug.LogFormat("[Complicated Buttons #{0}] You pressed {1}, I expected {2}. Input reset.", moduleId, button, order[currentButton]);
@@ -83,6 +86,7 @@ public class ComplicatedButtonsModule : MonoBehaviour
         {
             Debug.LogFormat("[Complicated Buttons #{0}] Module solved.", moduleId);
             BombModule.HandlePass();
+            moduleSolved = true;
         }
     }
 
